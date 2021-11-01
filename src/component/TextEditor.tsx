@@ -7,11 +7,19 @@ import {
     Modifier,
     RichUtils,
 } from 'draft-js'
+import { useCallback, useRef } from 'react'
 import { useEditor } from '../editorContext'
 import { myBlockRenderer } from './BlockRenderer'
 import './TextEditor.css'
 const TextEdtor: React.FC = () => {
     const { editorState, setEditorState } = useEditor()
+    const editor = useRef<Editor>(null)
+    const focusEditor = useCallback(() => {
+        if (editor.current) {
+            console.log('in Focus: ', editorState.getCurrentContent().toJS())
+            editor.current.focus()
+        }
+    }, [editor])
 
     const _handleKeyCommand = (command: DraftEditorCommand) => {
         const newState = RichUtils.handleKeyCommand(editorState, command)
@@ -44,9 +52,10 @@ const TextEdtor: React.FC = () => {
         return getDefaultKeyBinding(e)
     }
     return (
-        <div className="wrap-editor">
+        <div className="wrap-editor" onClick={focusEditor}>
             <div className="editor">
                 <Editor
+                    ref={editor}
                     editorState={editorState}
                     onChange={setEditorState}
                     blockRendererFn={myBlockRenderer}

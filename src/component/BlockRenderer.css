@@ -1,18 +1,22 @@
 .box:hover {
     border: 1px solid #f1f1f1;
-    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1); */
 }
 
 .wrap-editor {
     display: flex;
-    justify-content: center;
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    align-items: center;
 }
 
 .img-editor {
+    display: flex;
     background-color: #f1f1f1;
-    justify-items: center;
+    justify-content:center;
     align-items: center;
-    width: 550px;
+    /* width: 100%; */
+    width: 600px;
 }
 
 .img-editor-btn {
@@ -22,7 +26,9 @@
     background-color: #e1e1e1;
     cursor: pointer;
     width: 45px;
+    height: 20px;
     color: #333;
+    font-size: 10px;
 }
 
 .img-editor-btn:hover {
