@@ -19,7 +19,7 @@ const TextEdtor: React.FC = () => {
             console.log('in Focus: ', editorState.getCurrentContent().toJS())
             editor.current.focus()
         }
-    }, [editor])
+    }, [editor, editorState])
 
     const _handleKeyCommand = (command: DraftEditorCommand) => {
         const newState = RichUtils.handleKeyCommand(editorState, command)
