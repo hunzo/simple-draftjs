@@ -9,7 +9,7 @@ const PreviewModal: React.FC = () => {
     const { editorState } = useEditor()
     const html = convertToHTML({
         entityToHTML: (entity, text) => {
-            if (entity.type === 'image') {
+            if (entity.type === 'image:file') {
                 const { file_content_base64, alignment, width, file_name } = entity.data
                 return (
                     <p style={{ textAlign: alignment }}>

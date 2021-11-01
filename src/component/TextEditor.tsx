@@ -16,10 +16,11 @@ const TextEdtor: React.FC = () => {
     const editor = useRef<Editor>(null)
     const focusEditor = useCallback(() => {
         if (editor.current) {
-            console.log('in Focus: ', editorState.getCurrentContent().toJS())
+            // console.log('in Focus: ', editorState.getCurrentContent().toJS())
             editor.current.focus()
         }
-    }, [editor, editorState])
+    }, [editor])
+    // }, [editor, editorState])
 
     const _handleKeyCommand = (command: DraftEditorCommand) => {
         const newState = RichUtils.handleKeyCommand(editorState, command)

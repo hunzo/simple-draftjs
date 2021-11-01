@@ -10,6 +10,7 @@ interface ImagesReader {
     file_content_base64: string
     width: number
     alignment: string
+    cid?: string
 }
 
 const UploadFile: React.FC = () => {
@@ -48,10 +49,11 @@ const UploadFile: React.FC = () => {
                 file_content_base64: reader.result as string,
                 width: 450,
                 alignment: 'center',
+                cid: 'cid:' + Math.random().toString(36).substr(2, 9)
             }
             const constentStateWithEntity = editorState
                 .getCurrentContent()
-                .createEntity('image', 'IMMUTABLE', image)
+                .createEntity('image:file', 'IMMUTABLE', image)
 
             setEditorState(
                 AtomicBlockUtils.insertAtomicBlock(

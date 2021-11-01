@@ -25,7 +25,7 @@ export const MediaComponent: React.FC<BlockComponentProps> = (
     let media = null
 
     switch (entity.getType()) {
-        case 'image':
+        case 'image:file':
             // media = <SimpleImageComponent {...props} />
             media = <ImageComponent {...props} />
             break

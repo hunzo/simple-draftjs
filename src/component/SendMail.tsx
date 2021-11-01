@@ -24,13 +24,14 @@ const SendMail: React.FC = () => {
     const { editorState } = useEditor()
     const html = convertToHTML({
         entityToHTML: (entity, text) => {
-            if (entity.type === 'image') {
-                const { file_name, width, file_content_base64, alignment } =
+            if (entity.type === 'image:file') {
+                const { file_name, width, cid, alignment, file_content_base64 } =
                     entity.data
                 return (
                     <p style={{ textAlign: alignment }}>
                         <img
                             src={file_content_base64}
+                            // src={cid}
                             alt={file_name}
                             width={width}
                             
