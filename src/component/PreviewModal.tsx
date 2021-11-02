@@ -10,17 +10,32 @@ const PreviewModal: React.FC = () => {
     const html = convertToHTML({
         entityToHTML: (entity, text) => {
             if (entity.type === 'image:file') {
-                const { file_content_base64, alignment, width, file_name } = entity.data
+                const { src, alignment, width, file_name } = entity.data
                 return (
                     <p style={{ textAlign: alignment }}>
-                        <img src={file_content_base64} alt={file_name} width={width} />
+                        <img src={src} alt={file_name} width={width} />
                     </p>
                 )
             }
+            if (entity.type === 'image:url') {
+                const { src, alignment, width, file_name } = entity.data
+                return (
+                    <p style={{ textAlign: alignment }}>
+                        <a href={src}>
+                            <img src={src} alt={file_name} width={width} />
+                        </a>
+                    </p>
+                )
+            }
+
             if (entity.type === 'link') {
-                const {url} = entity.data
+                const { url } = entity.data
                 // console.log('convert link')
-                return <a  rel="noreferrer" target="_blank"  href={url}>{text}</a>;
+                return (
+                    <a rel="noreferrer" target="_blank" href={url}>
+                        {text}
+                    </a>
+                )
             }
         },
         blockToHTML: (block) => {
@@ -36,8 +51,7 @@ const PreviewModal: React.FC = () => {
                 )
             }
         },
-        
-    })(editorState.getCurrentContent()) 
+    })(editorState.getCurrentContent())
 
     return (
         <>
@@ -47,7 +61,7 @@ const PreviewModal: React.FC = () => {
             >
                 html preview
             </button>
-            <Modal isOpen={modal} ariaHideApp={false} >
+            <Modal isOpen={modal} ariaHideApp={false}>
                 <button onClick={() => setModal(false)}>close</button>
                 <p>
                     <strong>Generate HTML from RTF</strong>
