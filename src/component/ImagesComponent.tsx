@@ -1,4 +1,10 @@
-import { ContentBlock, EditorState, Modifier, SelectionState } from 'draft-js'
+import {
+    ContentBlock,
+    ContentState,
+    EditorState,
+    Modifier,
+    SelectionState,
+} from 'draft-js'
 import { CSSProperties, useState } from 'react'
 import { useEditor } from '../editorContext'
 import { BlockComponentProps } from './BlockRenderer'
@@ -84,46 +90,81 @@ const ImageFileComponent: React.FC<BlockComponentProps> = (
     const info = `file_name: ${file_name} file_size: ${file_size} file_type: ${file_type}`
 
     const deleteImage = () => {
-        console.log('delete')
+        console.log(props.block.getKey())
         const contentState = editorState.getCurrentContent()
-        const block = contentState.getBlockMap().first()
-        const next = contentState.getBlockAfter(props.block.getKey())
-        const key = block.getKey()
-        // const removeSelection = new SelectionState({
-        //     anchorKey: block.getKey(),
-        //     anchorOffset: 0,
-        //     focusKey: block.getKey(),
-        //     focusOffset: props.block.getLength(),
-        // })
-        const removeSelection = editorState.getSelection().merge({
+        // console.log(contentState.getAllEntities().toJS())
+        const key = props.block.getKey()
+
+        const selection = editorState.getSelection()
+        const selectionOfAtomicBlock = selection.merge({
             anchorKey: key,
             anchorOffset: 0,
             focusKey: key,
             focusOffset: props.block.getLength(),
         })
-        console.log(removeSelection)
-        // const key = props.block.getKey()
-        // console.log(key)
-
-        // const selection = editorState.getSelection()
-        // const xxx = selection.get
-        // const selectionOfAtomicBlock = selection.merge({
-        //     anchorKey: key,
-        //     anchorOffset: 0,
-        //     focusKey: key,
-        //     focusOffset: props.block.getLength(),
-        // });
-        // console.log(selectionOfAtomicBlock)
-
-        // const contentStateWithoutEntity = Modifier.applyEntity(props.contentState, selectionOfAtomicBlock, null)
-
-        // const editorStateWithoutEntity = EditorState.push(editorState, contentStateWithoutEntity, "apply-entity")
-
-        // const contentStateWithoutBlock = Modifier.removeRange(contentStateWithoutEntity, selectionOfAtomicBlock, "backward")
-
-        // const newEditorState = EditorState.push(editorStateWithoutEntity, contentStateWithoutBlock, "remove-range")
-        // setEditorState(newEditorState)
+        // console.log(selectionOfAtomicBlock.toJS())
+        const contentStateWithoutEntity = Modifier.applyEntity(
+            contentState,
+            selectionOfAtomicBlock,
+            null
+        )
+        // console.log(contentStateWithoutEntity.toJS())
+        const editorStateWithoutEntity = EditorState.push(
+            editorState,
+            contentStateWithoutEntity,
+            'apply-entity'
+        )
+        // console.log(editorStateWithoutEntity.toJS())
+        const contentStateWithoutBlock = Modifier.removeRange(
+            contentStateWithoutEntity,
+            selectionOfAtomicBlock,
+            'backward'
+        )
+        console.log(contentStateWithoutBlock.toJS())
+        // setEditorState(
+        //     EditorState.push(
+        //         editorStateWithoutEntity,
+        //         contentStateWithoutBlock,
+        //         'remove-range'
+        //     )
+        // )
     }
+
+    // const deleteImage = () => {
+    //     console.log('delete')
+    //     const key = props.block.getKey()
+    //     const selection = editorState.getSelection()
+    //     const selectionOfAtomicBlock = selection.merge({
+    //         anchorKey: key,
+    //         anchorOffset: 0,
+    //         focusKey: key,
+    //         focusOffset: props.block.getLength(),
+    //     })
+    //     // console.log(contentState.getEntity)
+    //     console.log(key)
+    //     console.log(selection)
+    //     console.log(selectionOfAtomicBlock)
+    //     const contentStateWithoutEntity = Modifier.applyEntity(
+    //         props.contentState,
+    //         selectionOfAtomicBlock,
+    //         null
+    //     )
+    //     console.log(contentStateWithoutEntity)
+    //     const editorStateWithoutEntity = EditorState.push(
+    //         editorState,
+    //         contentStateWithoutEntity,
+    //         'apply-entity'
+    //     )
+    //     console.log(editorStateWithoutEntity)
+    //     const contentStateWithoutBlock = Modifier.removeRange(
+    //         contentStateWithoutEntity,
+    //         selectionOfAtomicBlock,
+    //         'backward'
+    //     )
+    //     console.log(contentStateWithoutBlock)
+    //     const newEditorState =  EditorState.push(editorStateWithoutEntity, contentStateWithoutBlock, "remove-range")
+    //     setEditorState(newEditorState)
+    // }
 
     const setAlignment = (alignment: string) => {
         // set for state
