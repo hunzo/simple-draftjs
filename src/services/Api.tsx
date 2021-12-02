@@ -1,9 +1,10 @@
-import axios from "axios"
+import axios from 'axios'
 
 const Api = () => {
-    return axios.create({
-        baseURL: `http://localhost:8080`
-    })
+  return axios.create({
+    baseURL: `http://localhost:8080`,
+  })
 }
 
 export default Api
+

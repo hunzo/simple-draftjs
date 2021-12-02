@@ -1,13 +1,13 @@
 .toolbar {
-    display: flex;
-    width: 800px;
-    margin-top: 3rem;
-    
-    background-color: #e1e1e1;
-    border: 1px solid #e1e1e1;
+  display: flex;
+  width: 800px;
+  margin-top: 3rem;
+
+  background-color: #e1e1e1;
+  border: 1px solid #e1e1e1;
 }
 
 .toolbar button {
-    margin: 5px;
-    
+  margin: 5px;
 }
+
